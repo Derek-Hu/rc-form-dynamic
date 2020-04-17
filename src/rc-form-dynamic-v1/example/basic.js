@@ -1,8 +1,8 @@
-import React from 'react';
-import DynamicForm from 'rc-form-dynamic';
-import { Icon, Input, Form, Button } from 'antd';
+import React from '~/rc-form-dynamic-v1/example/react';
+import DynamicForm from '~/rc-form-dynamic-v1/example/rc-form-dynamic';
+import { Icon, Input, Form, Button } from '~/rc-form-dynamic-v1/example/antd';
 
-const settings = (values) => ({
+const settings = {
   props: {
     layout: "inline"
   },
@@ -30,14 +30,18 @@ const settings = (values) => ({
       },
     }
   ]
-});
+};
 
 export default class Example extends React.Component {
 
   state = {
-    formData: {
-      username: 'benjycui',
-      password: '',
+    fields: {
+      username: {
+        // value: 'benjycui',
+      },
+      password: {
+        // value: 'password',
+      },
     },
   };
 
@@ -73,7 +77,7 @@ export default class Example extends React.Component {
 
   render() {
     // const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.formRef.form;
-    const { formData } = this.state;
+    const { fields } = this.state;
 
     // Only show error after a field is touched.
     // const usernameError = isFieldTouched('username') && getFieldError('username');
@@ -84,15 +88,10 @@ export default class Example extends React.Component {
       <DynamicForm
         wrappedComponentRef={this.saveFormRef}
         settings={settings}
-        fields={formData}
+        fields={fields}
         onValuesChange={this.onValuesChange}
         onFieldsChange={this.onFieldsChange}>
         <Form.Item>
-          {
-          (fields, values) => ({
-            
-          })
-          }
           <Button type="primary" htmlType="submit" onClick={this.handleSubmit}
           // disabled={hasErrors(getFieldsError())}
           >
