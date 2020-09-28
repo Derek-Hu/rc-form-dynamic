@@ -1,46 +1,39 @@
 import React from 'react';
 import { Menu, Icon, Layout } from 'antd';
+import Overview, { Labels } from './antd/overview/index';
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
-const MenuCategory = {
-    common: '通用',
-    layout: '布局',
-    nav: '导航',
-    dataInput: '数据录入',
-    dataDisplay: '数据展示',
-    feedback: '反馈',
-    other: '其他'
-}
-const MenuKeys = Object.keys(MenuCategory);
+const MenuKeys = Object.keys(Overview);
 
 export default class Main extends React.Component {
 
     state = {
-        selectedKey: '内联登录栏'
+        selectedKey: ''
     }
-    onSelect = (selectedKey) => {
+    onSelect = ({ key: selectedKey }) => {
+        console.log('selectedKey', selectedKey);
         this.setState({
             selectedKey
         })
     }
     render() {
-
+        const { component } = Overview[this.state.selectedKey] || {};
         return (
             <Layout style={{ minHeight: '100vh', background: '#fff' }}>
                 <Header style={{ background: '#fff', padding: 0, height: 'auto' }}>
-                    <Menu mode="horizontal">
+                    <Menu mode="horizontal" onSelect={this.onSelect}>
                         <Menu.Item key="github">
                             <Icon type="menu" /><span>文件</span>
                         </Menu.Item>
                         {
                             MenuKeys.map(key => <Menu.Item key={key}>
-                                <span>{MenuCategory[key]}</span>
+                                <span>{Overview[key].label}</span>
                             </Menu.Item>)
                         }
                     </Menu>
                     <div style={{ height: '100px', width: '100%' }}>
-
+                        {component ? Object.keys(component).map(key => <img src={component[key]} alt={Labels[key]} />) : null}
                     </div>
                 </Header>
                 <Layout >
