@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Layout } from 'antd';
 import Overview, { Labels } from './antd/overview/index';
+import styles from './style.module.less';
 
 const { Header } = Layout;
 
@@ -20,8 +21,8 @@ export default class Main extends React.Component {
     render() {
         const { component } = Overview[this.state.selectedKey] || {};
         return (
-            <Layout style={{ minHeight: '100vh', background: '#fff' }}>
-                <Header style={{ background: '#fff', padding: 0, height: 'auto' }}>
+            <Layout className={styles.root}>
+                <Header className={styles.header}>
                     <Menu mode="horizontal" onSelect={this.onSelect}>
                         <Menu.Item key="github">
                             <Icon type="menu" /><span>文件</span>
@@ -32,8 +33,11 @@ export default class Main extends React.Component {
                             </Menu.Item>)
                         }
                     </Menu>
-                    <div style={{ height: '100px', width: '100%' }}>
-                        {component ? Object.keys(component).map(key => <img src={component[key]} alt={Labels[key]} />) : null}
+                    <div className={styles.imgWpr}>
+                        {component ? Object.keys(component).map(key => <div key={key} className={styles.imgEle}>
+                            <span className={styles.title}>{Labels[key]}</span>
+                            <img src={component[key]} title={Labels[key]} alt={Labels[key]} />
+                        </div>) : null}
                     </div>
                 </Header>
                 <Layout >
